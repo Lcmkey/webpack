@@ -1,3 +1,4 @@
+const webpack = require("webpack");
 const path = require("path");
 const HTMLWebpackPlugin = require("html-webpack-plugin");
 const {
@@ -10,6 +11,9 @@ const TerserWebpackPlugin = require("terser-webpack-plugin");
 const {
   BundleAnalyzerPlugin
 } = require("webpack-bundle-analyzer");
+const DotenvWebpackPlugin = require('dotenv-webpack');
+
+const dotenv = require('dotenv').config({path: __dirname + '/.env'});
 
 const devMode = process.env.NODE_ENV === "development";
 const prodMode = !devMode;
@@ -81,6 +85,13 @@ const jsLoaders = () => {
 
 const plugins = () => {
   const plugins = [
+    new webpack.DefinePlugin({
+      "process.env": dotenv.parsed
+    }),
+    // new DotenvWebpackPlugin({
+    //   path: ".env",
+    //   // safe: true
+    // }),
     new HTMLWebpackPlugin({
       title: "Webpack",
       template: path.resolve(__dirname, "public", "index.html"),
@@ -121,6 +132,9 @@ module.exports = {
     // filename: "[name].[hash].js",
     filename: filename("js"),
     path: path.resolve(__dirname, "dist"),
+  },
+  "node": {
+     "fs": "empty"
   },
   resolve: {
     extensions: [".js", ".json", ".png"],

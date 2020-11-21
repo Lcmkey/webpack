@@ -8,9 +8,12 @@ import "./styles/scss.scss";
 import webpackLogo from "@/asserts/webpack_icon";
 import React from "react";
 import {render} from "react-dom";
+
 // import jsonData from "@/asserts/data";
 // import xmlData from "@/asserts/data.xml";
 // import csvData from "@/asserts/data.csv";
+
+console.log(process.env);
 
 import Post from "@models/Post";
 
